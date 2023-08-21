@@ -1,1 +1,1 @@
-export { default as InfoForm } from "./InfoForm";
+export * from "./subroutes";

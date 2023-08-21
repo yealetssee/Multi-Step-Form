@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import Main from "./components/Main";
+import Main from "./pages/Main";
 
 function App() {
   return (
-    <main className="w-screen h-screen bg-cyan-50 flex items-center justify-center">
+    <main className="w-full py-20 h-full bg-cyan-50 flex items-center justify-center">
       <Routes>
         <Route path="*" element={<Main />} />
       </Routes>
