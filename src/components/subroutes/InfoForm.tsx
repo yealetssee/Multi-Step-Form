@@ -1,5 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+type FormData = {
+  name: string;
+  password: string;
+  email: string;
+  phone: string;
+};
 
 const InfoForm = () => {
   const {
@@ -8,13 +14,6 @@ const InfoForm = () => {
     formState: { errors, isValid },
   } = useForm<FormData>();
   const navigate = useNavigate();
-
-  type FormData = {
-    name: string;
-    password: string;
-    email: string;
-    phone: string;
-  };
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
@@ -51,7 +50,7 @@ const InfoForm = () => {
             )}
           </div>
 
-          <div className="w-full px-4 p-1 mt-2  border h-14 rounded-lg border-neutral-300">
+          <div className="w-full px-4 p-1 mt-2  border h-14 rounded-lg border-neutral-300 focus-within:border-sky-800 focus-within:border-2">
             <input
               className=" text-xl w-full h-full border-0  font-bold text-sky-900 outline-none  "
               id="name"
@@ -75,7 +74,7 @@ const InfoForm = () => {
               </p>
             )}
           </div>
-          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300">
+          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300 focus-within:border-sky-800 focus-within:border-2">
             <input
               className=" text-xl w-full h-full border-0 outline-none text-sky-900 font-bold  "
               id="password"
@@ -105,7 +104,7 @@ const InfoForm = () => {
               </p>
             )}
           </div>
-          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300">
+          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300 focus-within:border-sky-800 focus-within:border-2">
             <input
               className=" text-xl w-full h-full border-0 outline-none text-sky-900 font-bold "
               id="email"
@@ -129,7 +128,7 @@ const InfoForm = () => {
               </p>
             )}
           </div>
-          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300">
+          <div className="w-full px-4 py-1 mt-2  border h-14 rounded-lg border-neutral-300 focus-within:border-sky-800 focus-within:border-2 ">
             <input
               className=" text-xl w-full h-full border-0 outline-none text-sky-900 font-bold  "
               id="phone"

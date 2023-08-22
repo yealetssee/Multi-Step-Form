@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { advanced, arcade, pro } from "../../assets/images";
+
+import GoBack from "../shared/GoBack";
+import { PlansContext } from "../../pages/Main";
 
 const SelectPlan = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const { plan, setPlan } = useContext(PlansContext);
+  const handleChoosePlan = (plan: "arcade" | "advanced" | "pro") => {
+    setPlan(plan);
+  };
 
   return (
     <div>
@@ -15,8 +21,15 @@ const SelectPlan = () => {
           you have the option of monthly or yearly billing
         </span>
       </h1>
-      <div className="flex gap-3 h-40 w-full justify-between mt-10">
-        <div className="flex flex-col p-4  justify-between items-start border border-neutral-200 rounded-lg w-full cursor-pointer">
+      <div className="flex gap-3 h-40 w-full justify-between mt-10 ">
+        <div
+          className={`flex flex-col p-4  justify-between items-start border  rounded-lg w-full cursor-pointer  ${
+            plan === "arcade"
+              ? "bg-slate-100 border-sky-800"
+              : "bg-transparent border-neutral-200"
+          }`}
+          onClick={() => handleChoosePlan("arcade")}
+        >
           <img src={arcade} />
           <h3>
             <span className="font-medium text-sky-900">Arcade</span>
@@ -28,7 +41,14 @@ const SelectPlan = () => {
             )}
           </h3>
         </div>
-        <div className="flex flex-col p-4 justify-between items-start border border-neutral-200 rounded-lg w-full cursor-pointer">
+        <div
+          className={`flex flex-col p-4 justify-between items-start border border-neutral-200 rounded-lg w-full cursor-pointer ${
+            plan === "advanced"
+              ? "bg-slate-100 border-sky-800"
+              : "bg-transparent border-neutral-200"
+          }`}
+          onClick={() => handleChoosePlan("advanced")}
+        >
           <img src={advanced} />
           <h3>
             <span className="font-medium text-sky-900">Advanced</span>
@@ -40,7 +60,14 @@ const SelectPlan = () => {
             )}
           </h3>
         </div>
-        <div className="flex flex-col p-4 justify-between items-start border border-neutral-200 rounded-lg w-full cursor-pointer">
+        <div
+          className={`flex flex-col p-4 justify-between items-start border border-neutral-200 rounded-lg w-full cursor-pointer ${
+            plan === "pro"
+              ? "bg-slate-100 border-sky-800"
+              : "bg-transparent border-neutral-200"
+          }`}
+          onClick={() => handleChoosePlan("pro")}
+        >
           <img src={pro} />
           <h3>
             <span className="font-medium text-sky-900">Pro</span>
@@ -85,6 +112,16 @@ const SelectPlan = () => {
             Yearly
           </span>
         </div>
+      </div>
+      <div className="mt-16 flex justify-between items-center">
+        <GoBack />
+
+        <button
+          // onClick={handleNextStep}
+          className=" w-40 h-12 bg-sky-950 rounded-xl text-white text-lg font-medium flex items-center justify-center hover:bg-sky-800"
+        >
+          Next Step
+        </button>
       </div>
     </div>
   );

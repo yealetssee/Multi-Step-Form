@@ -1,8 +1,17 @@
 import { InfoForm, SelectPlan } from "../components";
 import { sidebarDesktop } from "../assets/images";
 import { Link, Route, Routes } from "react-router-dom";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
+
+export const PlansContext = createContext<{
+  plan: Plan;
+  setPlan: Dispatch<SetStateAction<Plan>>;
+}>({ plan: "arcade", setPlan: () => {} });
+
+type Plan = "arcade" | "advanced" | "pro";
 
 const Main = () => {
+  const [plan, setPlan] = useState<Plan>("arcade");
   return (
     <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
       <div
@@ -65,12 +74,14 @@ const Main = () => {
         </ul>
       </div>
       <div className="w-full px-24 pt-10">
-        <Routes>
-          <Route path="/" element={<InfoForm />} />
-          <Route path="/plan" element={<SelectPlan />} />
-          <Route path="/addons" element={<div>addon</div>} />
-          <Route path="/summary" element={<div>summary</div>} />
-        </Routes>
+        <PlansContext.Provider value={{ plan, setPlan }}>
+          <Routes>
+            <Route path="/" element={<InfoForm />} />
+            <Route path="/plan" element={<SelectPlan />} />
+            <Route path="/addons" element={<div>addon</div>} />
+            <Route path="/summary" element={<div>summary</div>} />
+          </Routes>
+        </PlansContext.Provider>
       </div>
     </main>
   );
