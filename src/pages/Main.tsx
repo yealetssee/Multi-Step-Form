@@ -1,17 +1,23 @@
-import { InfoForm, SelectPlan } from "../components";
+import { Addons, InfoForm, SelectPlan } from "../components";
 import { sidebarDesktop } from "../assets/images";
 import { Link, Route, Routes } from "react-router-dom";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { createContext, useState } from "react";
+import { ContextType, PayPer, Plan, addons } from "../types";
 
-export const PlansContext = createContext<{
-  plan: Plan;
-  setPlan: Dispatch<SetStateAction<Plan>>;
-}>({ plan: "arcade", setPlan: () => {} });
-
-type Plan = "arcade" | "advanced" | "pro";
+export const PlansContext = createContext<ContextType>({
+  plan: "arcade",
+  payPer: "monthly",
+  addons: [],
+  setAddons: () => {},
+  setPlan: () => {},
+  setPayPer: () => {},
+});
 
 const Main = () => {
   const [plan, setPlan] = useState<Plan>("arcade");
+  const [payPer, setPayPer] = useState<PayPer>("monthly");
+  const [addons, setAddons] = useState<addons[]>([]);
+
   return (
     <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
       <div
@@ -74,11 +80,13 @@ const Main = () => {
         </ul>
       </div>
       <div className="w-full px-24 pt-10">
-        <PlansContext.Provider value={{ plan, setPlan }}>
+        <PlansContext.Provider
+          value={{ plan, setPlan, payPer, setPayPer, addons, setAddons }}
+        >
           <Routes>
             <Route path="/" element={<InfoForm />} />
             <Route path="/plan" element={<SelectPlan />} />
-            <Route path="/addons" element={<div>addon</div>} />
+            <Route path="/addons" element={<Addons />} />
             <Route path="/summary" element={<div>summary</div>} />
           </Routes>
         </PlansContext.Provider>
