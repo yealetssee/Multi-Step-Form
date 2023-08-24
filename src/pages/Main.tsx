@@ -7,7 +7,13 @@ import { ContextType, PayPer, Plan, addons } from "../types";
 export const PlansContext = createContext<ContextType>({
   plan: "arcade",
   payPer: "monthly",
-  addons: [],
+  addons: {
+    services: false,
+    storage: false,
+    profile: false,
+  },
+  isToggled: false,
+  setIsToggled: () => {},
   setAddons: () => {},
   setPlan: () => {},
   setPayPer: () => {},
@@ -16,7 +22,12 @@ export const PlansContext = createContext<ContextType>({
 const Main = () => {
   const [plan, setPlan] = useState<Plan>("arcade");
   const [payPer, setPayPer] = useState<PayPer>("monthly");
-  const [addons, setAddons] = useState<addons[]>([]);
+  const [addons, setAddons] = useState<addons>({
+    services: false,
+    storage: false,
+    profile: false,
+  });
+  const [isToggled, setIsToggled] = useState(false);
 
   return (
     <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
@@ -81,7 +92,16 @@ const Main = () => {
       </div>
       <div className="w-full px-24 pt-10">
         <PlansContext.Provider
-          value={{ plan, setPlan, payPer, setPayPer, addons, setAddons }}
+          value={{
+            plan,
+            setPlan,
+            payPer,
+            setPayPer,
+            addons,
+            setAddons,
+            isToggled,
+            setIsToggled,
+          }}
         >
           <Routes>
             <Route path="/" element={<InfoForm />} />

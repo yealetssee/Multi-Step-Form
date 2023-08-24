@@ -1,0 +1,6 @@
+.checkbox:checked {
+  background-image: url("../assets/images/icon-checkmark.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}

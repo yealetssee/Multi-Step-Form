@@ -1,14 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { advanced, arcade, pro } from "../../assets/images";
 
 import GoBack from "../shared/GoBack";
 import { PlansContext } from "../../pages/Main";
+import { useNavigate } from "react-router-dom";
+import { Plan } from "../../types";
 
 const SelectPlan = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const { plan, setPlan } = useContext(PlansContext);
-  const handleChoosePlan = (plan: "arcade" | "advanced" | "pro") => {
+  const { plan, setPlan, setPayPer, isToggled, setIsToggled } =
+    useContext(PlansContext);
+  const handleChoosePlan = (plan: Plan) => {
     setPlan(plan);
+  };
+
+  const navigate = useNavigate();
+
+  const handlePayPer = () => {
+    setIsToggled(!isToggled);
+    if (!isToggled) {
+      setPayPer("yearly");
+    } else {
+      setPayPer("monthly");
+    }
   };
 
   return (
@@ -34,9 +47,9 @@ const SelectPlan = () => {
           <h3>
             <span className="font-medium text-sky-900">Arcade</span>
             <span className="block text-xs text-slate-500">
-              {!isClicked ? "$9/mo" : "$90/yr"}
+              {!isToggled ? "$9/mo" : "$90/yr"}
             </span>
-            {isClicked && (
+            {isToggled && (
               <span className="block text-sky-900 text-xs">2 months free</span>
             )}
           </h3>
@@ -53,9 +66,9 @@ const SelectPlan = () => {
           <h3>
             <span className="font-medium text-sky-900">Advanced</span>
             <span className="block text-xs text-slate-500">
-              {!isClicked ? "$12/mo" : "$120/yr"}
+              {!isToggled ? "$12/mo" : "$120/yr"}
             </span>
-            {isClicked && (
+            {isToggled && (
               <span className="block text-sky-900 text-xs">2 months free</span>
             )}
           </h3>
@@ -72,9 +85,9 @@ const SelectPlan = () => {
           <h3>
             <span className="font-medium text-sky-900">Pro</span>
             <span className="block text-xs text-slate-500">
-              {!isClicked ? "$15/mo" : "$150/yr"}
+              {!isToggled ? "$15/mo" : "$150/yr"}
             </span>
-            {isClicked && (
+            {isToggled && (
               <span className="block text-sky-900 text-xs">2 months free</span>
             )}
           </h3>
@@ -84,29 +97,27 @@ const SelectPlan = () => {
         <div className="h-full  flex  gap-4 items-center">
           <span
             className={`${
-              !isClicked ? "text-sky-950" : "text-slate-500"
+              !isToggled ? "text-sky-950" : "text-slate-500"
             } font-medium`}
           >
             Monthly
           </span>
           <div
             className={`relative  w-10 h-5 bg-sky-950   rounded-full transition duration-200 ease-in-out focus:bg-red-500 cursor-pointer`}
-            onClick={() => {
-              setIsClicked(!isClicked);
-            }}
+            onClick={handlePayPer}
           >
             <div
               className="w-3 h-3 left-1 absolute top-1/2 - rounded-full bg-white"
               style={{
                 transform: `translateY(-50%) translateX(${
-                  isClicked ? "20.5px" : "0px"
+                  isToggled ? "20.5px" : "0px"
                 })`,
               }}
             ></div>
           </div>
           <span
             className={`${
-              isClicked ? "text-sky-950" : "text-slate-500"
+              isToggled ? "text-sky-950" : "text-slate-500"
             } font-medium`}
           >
             Yearly
@@ -114,10 +125,10 @@ const SelectPlan = () => {
         </div>
       </div>
       <div className="mt-16 flex justify-between items-center">
-        <GoBack />
+        <GoBack to="/" />
 
         <button
-          // onClick={handleNextStep}
+          onClick={() => navigate("/addons")}
           className=" w-40 h-12 bg-sky-950 rounded-xl text-white text-lg font-medium flex items-center justify-center hover:bg-sky-800"
         >
           Next Step
