@@ -26,7 +26,13 @@ const AddonBox: React.FC<AddonType> = ({
   };
 
   return (
-    <div className="w-full h-20  border-solid border-2  border-sky-800 rounded-lg flex items-center px-6 justify-between">
+    <div
+      className={`w-full h-20  border-solid border-2   rounded-lg flex items-center px-6 justify-between ${
+        checked
+          ? "border-sky-700 bg-slate-100"
+          : "border-neutral-200 bg-transparent"
+      } `}
+    >
       <div className="flex gap-7 items-center">
         <input
           className="checkbox  appearance-none bg-white w-6 h-6 border border-slate-300 rounded-md checked:bg-sky-700"
@@ -44,8 +50,7 @@ const AddonBox: React.FC<AddonType> = ({
         </label>
       </div>
       <span className="text-sky-700">
-        +${payPer === "monthly" ? price : price * 10}/
-        {payPer === "monthly" ? "mo" : "yr"}
+        +${price}/{payPer === "monthly" ? "mo" : "yr"}
       </span>
     </div>
   );

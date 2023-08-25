@@ -5,8 +5,7 @@ import { PlansContext } from "../../pages/Main";
 
 const Addons = () => {
   const navigate = useNavigate();
-  const { addons } = useContext(PlansContext);
-  console.log(addons);
+  const { addons, price } = useContext(PlansContext);
 
   return (
     <div>
@@ -22,21 +21,21 @@ const Addons = () => {
           id="services"
           labelH2="online services"
           labelH4="acces to multiplayer games"
-          price={1}
+          price={price.services}
           checked={addons.services}
         />
         <AddonBox
           id="storage"
           labelH2="larger storage"
           labelH4="extra 1TB of cloud save"
-          price={2}
+          price={price.storage}
           checked={addons.storage}
         />
         <AddonBox
           id="profile"
           labelH2="customizable profile"
           labelH4="custom theme on your profile"
-          price={2}
+          price={price.profile}
           checked={addons.profile}
         />
       </div>

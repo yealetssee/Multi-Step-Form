@@ -1,8 +1,8 @@
-import { Addons, InfoForm, SelectPlan } from "../components";
+import { Addons, InfoForm, SelectPlan, Summary } from "../components";
 import { sidebarDesktop } from "../assets/images";
 import { Link, Route, Routes } from "react-router-dom";
 import { createContext, useState } from "react";
-import { ContextType, PayPer, Plan, addons } from "../types";
+import { ContextType, PayPer, Plan, Price, addonNames, addons } from "../types";
 
 export const PlansContext = createContext<ContextType>({
   plan: "arcade",
@@ -11,6 +11,19 @@ export const PlansContext = createContext<ContextType>({
     services: false,
     storage: false,
     profile: false,
+  },
+  addonNames: {
+    services: "Online services",
+    storage: "Larger storage",
+    profile: "Customizable profile",
+  },
+  price: {
+    arcade: 9,
+    advanced: 12,
+    pro: 15,
+    services: 1,
+    storage: 2,
+    profile: 2,
   },
   isToggled: false,
   setIsToggled: () => {},
@@ -27,7 +40,20 @@ const Main = () => {
     storage: false,
     profile: false,
   });
+  const addonNames: addonNames = {
+    services: "Online services",
+    storage: "Larger storage",
+    profile: "Customizable profile",
+  };
   const [isToggled, setIsToggled] = useState(false);
+  const price: Price = {
+    arcade: payPer === "yearly" ? 90 : 9,
+    advanced: payPer === "yearly" ? 120 : 12,
+    pro: payPer === "yearly" ? 150 : 15,
+    services: payPer === "yearly" ? 10 : 1,
+    storage: payPer === "yearly" ? 20 : 2,
+    profile: payPer === "yearly" ? 20 : 2,
+  };
 
   return (
     <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
@@ -101,13 +127,15 @@ const Main = () => {
             setAddons,
             isToggled,
             setIsToggled,
+            price,
+            addonNames,
           }}
         >
           <Routes>
             <Route path="/" element={<InfoForm />} />
             <Route path="/plan" element={<SelectPlan />} />
             <Route path="/addons" element={<Addons />} />
-            <Route path="/summary" element={<div>summary</div>} />
+            <Route path="/summary" element={<Summary />} />
           </Routes>
         </PlansContext.Provider>
       </div>
