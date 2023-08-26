@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Plan } from "../../types";
 
 const SelectPlan = () => {
-  const { plan, setPlan, setPayPer, isToggled, setIsToggled } =
+  const { plan, setPlan, payPer, setPayPer, isToggled, setIsToggled, price } =
     useContext(PlansContext);
   const handleChoosePlan = (plan: Plan) => {
     setPlan(plan);
@@ -85,7 +85,7 @@ const SelectPlan = () => {
           <h3>
             <span className="font-medium text-sky-900">Pro</span>
             <span className="block text-xs text-slate-500">
-              {!isToggled ? "$15/mo" : "$150/yr"}
+              ${price.pro}/{payPer === "monthly" ? "mo" : "yr"}
             </span>
             {isToggled && (
               <span className="block text-sky-900 text-xs">2 months free</span>

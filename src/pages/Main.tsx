@@ -1,8 +1,16 @@
-import { Addons, InfoForm, SelectPlan, Summary } from "../components";
+import { Addons, InfoForm, SelectPlan, Summary, ThankYou } from "../components";
 import { sidebarDesktop } from "../assets/images";
 import { Link, Route, Routes } from "react-router-dom";
-import { createContext, useState } from "react";
-import { ContextType, PayPer, Plan, Price, addonNames, addons } from "../types";
+import { createContext, useEffect, useState } from "react";
+import {
+  ContextType,
+  PayPer,
+  Plan,
+  Price,
+  addonNames,
+  addons,
+  priceList,
+} from "../types";
 
 export const PlansContext = createContext<ContextType>({
   plan: "arcade",
@@ -12,6 +20,7 @@ export const PlansContext = createContext<ContextType>({
     storage: false,
     profile: false,
   },
+  totalPrice: 0,
   addonNames: {
     services: "Online services",
     storage: "Larger storage",
@@ -30,6 +39,7 @@ export const PlansContext = createContext<ContextType>({
   setAddons: () => {},
   setPlan: () => {},
   setPayPer: () => {},
+  setTotalPrice: () => {},
 });
 
 const Main = () => {
@@ -46,14 +56,32 @@ const Main = () => {
     profile: "Customizable profile",
   };
   const [isToggled, setIsToggled] = useState(false);
-  const price: Price = {
-    arcade: payPer === "yearly" ? 90 : 9,
-    advanced: payPer === "yearly" ? 120 : 12,
-    pro: payPer === "yearly" ? 150 : 15,
-    services: payPer === "yearly" ? 10 : 1,
-    storage: payPer === "yearly" ? 20 : 2,
-    profile: payPer === "yearly" ? 20 : 2,
+  const priceList: priceList = {
+    arcade: { yearly: 90, monthly: 9 },
+    advanced: { yearly: 120, monthly: 12 },
+    pro: { yearly: 150, monthly: 15 },
+    services: { yearly: 10, monthly: 1 },
+    storage: { yearly: 20, monthly: 2 },
+    profile: { yearly: 20, monthly: 2 },
   };
+  const price = Object.keys(priceList).reduce((acc, key) => {
+    acc[key] = priceList[key][payPer];
+    return acc;
+  }, {} as Price);
+
+  // console.log(price);
+  const calculateTotalPrice = () => {
+    let total = price[plan];
+    if (addons.services) total += price.services;
+    if (addons.storage) total += price.storage;
+    if (addons.profile) total += price.profile;
+    return total;
+  };
+  const [totalPrice, setTotalPrice] = useState(calculateTotalPrice());
+
+  useEffect(() => {
+    setTotalPrice(calculateTotalPrice());
+  }, [calculateTotalPrice()]);
 
   return (
     <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
@@ -129,6 +157,8 @@ const Main = () => {
             setIsToggled,
             price,
             addonNames,
+            totalPrice,
+            setTotalPrice,
           }}
         >
           <Routes>
@@ -136,6 +166,7 @@ const Main = () => {
             <Route path="/plan" element={<SelectPlan />} />
             <Route path="/addons" element={<Addons />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="/thanks" element={<ThankYou />} />
           </Routes>
         </PlansContext.Provider>
       </div>

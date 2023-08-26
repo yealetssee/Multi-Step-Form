@@ -28,7 +28,7 @@ const InfoForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>
-        <span className=" font-bold text-sky-950 text-4xl">Personal info</span>
+        <span className=" font-bold text-sky-950 text-4xl ">Personal info</span>
         <span className="text-base block text-slate-500 mt-4">
           Please provide your name, email address, and phone number.
         </span>

@@ -23,6 +23,19 @@ export type Price = {
   profile: number;
   [key: string]: number;
 };
+
+export type priceList = {
+  arcade: { yearly: number; monthly: number };
+  advanced: { yearly: number; monthly: number };
+  pro: { yearly: number; monthly: number };
+  services: { yearly: number; monthly: number };
+  storage: { yearly: number; monthly: number };
+  profile: { yearly: number; monthly: number };
+  [key: string]: {
+    monthly: number;
+    yearly: number;
+  };
+};
 export type ContextType = {
   plan: Plan;
   payPer: "monthly" | "yearly";
@@ -34,6 +47,8 @@ export type ContextType = {
   isToggled: boolean;
   setIsToggled: Dispatch<SetStateAction<boolean>>;
   addons: addons;
+  totalPrice: number;
+  setTotalPrice: Dispatch<SetStateAction<number>>;
 
   setPlan: Dispatch<SetStateAction<Plan>>;
 };

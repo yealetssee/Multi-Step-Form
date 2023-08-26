@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoBack } from "..";
 
 const Summary = () => {
-  const { plan, price, payPer, addons, addonNames } = useContext(PlansContext);
+  const { plan, price, payPer, addons, addonNames, totalPrice } =
+    useContext(PlansContext);
   const navigate = useNavigate();
   return (
     <>
@@ -52,13 +53,15 @@ const Summary = () => {
         <span className="text-slate-500">
           Total {`${payPer === "monthly" ? "(per month)" : "(per year)"}`}
         </span>
-        <span className="font-bold text-2xl text-sky-700">9euro</span>
+        <span className="font-bold text-2xl text-sky-700">
+          +{totalPrice}$/{`${payPer === "monthly" ? "mo" : "yr"}`}
+        </span>
       </div>
       <div className="mt-16 flex justify-between items-center">
         <GoBack to="/addons" />
 
         <button
-          onClick={() => navigate("/addons")}
+          onClick={() => navigate("/thanks")}
           className=" w-40 h-12 bg-sky-950 rounded-xl text-white text-lg font-medium flex items-center justify-center hover:bg-sky-800"
         >
           Confirm
