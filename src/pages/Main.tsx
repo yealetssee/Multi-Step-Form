@@ -1,6 +1,6 @@
 import { Addons, InfoForm, SelectPlan, Summary, ThankYou } from "../components";
 import { sidebarDesktop } from "../assets/images";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import {
   ContextType,
@@ -82,9 +82,10 @@ const Main = () => {
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
   }, [calculateTotalPrice()]);
+  const location = useLocation();
 
   return (
-    <main className=" h-auto bg-white p-4 flex w-[1000px] rounded-lg  ">
+    <main className=" h-auto bg-white p-4 flex  w-[1000px] rounded-lg  ">
       <div
         style={{ backgroundImage: `url(${sidebarDesktop})` }}
         className=" h-auto  bg-cover bg-center p-10 rounded-lg w-[500px]  "
@@ -92,7 +93,11 @@ const Main = () => {
         <ul className="uppercase">
           <Link to={"/"}>
             <li className="flex gap-4  text-xl items-center ">
-              <div className="w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white">
+              <div
+                className={`w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white ${
+                  location.pathname === "/" ? "bg-cyan-600" : "bg-transparent"
+                }`}
+              >
                 1
               </div>{" "}
               <div className="">
@@ -105,7 +110,13 @@ const Main = () => {
           </Link>
           <Link to={"/plan"}>
             <li className="flex gap-4 text-xl mt-4 items-center">
-              <div className="w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white">
+              <div
+                className={`w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white ${
+                  location.pathname === "/plan"
+                    ? "bg-cyan-600"
+                    : "bg-transparent"
+                }`}
+              >
                 2
               </div>{" "}
               <div className="">
@@ -118,7 +129,13 @@ const Main = () => {
           </Link>
           <Link to={"/addons"}>
             <li className="flex gap-4 text-xl mt-4 items-center">
-              <div className="w-10 h-10 flex items-center justify-center   border-white  border rounded-full text-center text-white">
+              <div
+                className={`w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white ${
+                  location.pathname === "/addons"
+                    ? "bg-cyan-600"
+                    : "bg-transparent"
+                }`}
+              >
                 3
               </div>{" "}
               <div className="">
@@ -131,7 +148,13 @@ const Main = () => {
           </Link>
           <Link to={"summary"}>
             <li className="flex gap-4 text-xl mt-4 items-center">
-              <div className="w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white">
+              <div
+                className={`w-10 h-10 flex items-center justify-center  border-white  border rounded-full text-center text-white ${
+                  location.pathname === "/summary"
+                    ? "bg-cyan-600"
+                    : "bg-transparent"
+                }`}
+              >
                 4
               </div>{" "}
               <div className="">
@@ -166,7 +189,7 @@ const Main = () => {
             <Route path="/plan" element={<SelectPlan />} />
             <Route path="/addons" element={<Addons />} />
             <Route path="/summary" element={<Summary />} />
-            <Route path="/thanks" element={<ThankYou />} />
+            <Route path="thanks" element={<ThankYou />} />
           </Routes>
         </PlansContext.Provider>
       </div>
